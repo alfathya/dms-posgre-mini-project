@@ -1,6 +1,6 @@
 const ContactRouter = require("express").Router();
-
-const pool = require('../helpers/db');
+const pool = require("../middlewares/db");
+const ContactController = require('../controllers/contact');
 
 ContactRouter.get("/", async (req, res) => {
   try {
@@ -11,4 +11,6 @@ ContactRouter.get("/", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+ContactRouter.post('/', pool, ContactController.createContact);
 module.exports = ContactRouter;
