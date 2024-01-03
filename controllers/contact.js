@@ -1,6 +1,15 @@
 const ContactEntities = require('../entities/contacts');
 
 class ContactController {
+    static getAll = async (req, res, next) => {
+        try {
+            const allDatas = await ContactEntities.getAll(req.pool);
+
+            res.status(200).json(allDatas);
+        } catch (error) {
+            next (error)
+        }
+    }
     static createContact = async (req, res, next) => {
         try {
             const payload = {
@@ -20,7 +29,6 @@ class ContactController {
             const createdContact = await ContactEntities.createContact(req.pool, payload);
 
             res.status(201).json({
-                message: 'Contact created success!',
                 createdContact,
             })
         } catch (error) {
